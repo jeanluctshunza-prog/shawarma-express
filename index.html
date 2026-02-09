@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shawarma Express - Menu Complet</title>
+    <title>Shawarma Express - Menu Mobile</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --noir: #000000; --blanc: #ffffff; --gris: #f4f4f4; }
+        :root { --noir: #000000; --blanc: #ffffff; --gris: #f4f4f4; --rouge: #ff0000; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--blanc); color: var(--noir); padding-bottom: 20px; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--blanc); color: var(--noir); padding-bottom: 20px; overflow-x: hidden; }
 
-        header { background: var(--noir); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; color: var(--blanc); font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; }
+        header { background: var(--noir); padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .brand { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .brand img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--blanc); object-fit: cover; background: #fff; }
+        .logo-text { font-weight: 900; color: var(--blanc); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; }
 
-        /* CAROUSEL COMPACT */
+        /* CAROUSEL AUTOMATIQUE */
         .carousel-viewport { width: 100%; height: 200px; overflow: hidden; position: relative; background: #000; }
         .carousel-track { display: flex; width: 800%; height: 100%; animation: slide 25s infinite linear; }
         .slide { width: 12.5%; height: 100%; position: relative; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-        .slide .label { position: absolute; bottom: 10px; left: 15px; color: white; font-weight: 900; font-size: 0.8rem; letter-spacing: 1px; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .slide .label { position: absolute; bottom: 15px; left: 15px; color: white; font-weight: 900; font-size: 0.8rem; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
 
         @keyframes slide { 
             0%, 10% { transform: translateX(0); }
@@ -33,35 +35,44 @@
             100% { transform: translateX(0); }
         }
 
-        .delivery-info { background: var(--gris); padding: 12px; margin: 15px; font-size: 0.7rem; border-left: 3px solid #000; text-align: center; }
+        .delivery-info { background: var(--gris); padding: 12px; margin: 15px; font-size: 0.75rem; border-left: 4px solid #000; text-align: center; font-weight: 600; }
+        .delivery-alert { color: var(--rouge); font-size: 0.7rem; font-weight: 900; text-align: center; padding: 0 15px 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+
         .menu-section { padding: 0 15px; }
-        .cat-title { color: #000; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .cat-title { color: #000; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin: 30px 0 15px; border-bottom: 2px solid #000; padding-bottom: 5px; display: inline-block; }
 
-        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f9f9f9; }
-        .item-info { display: flex; align-items: center; gap: 10px; }
-        .checkbox-custom { appearance: none; width: 18px; height: 18px; border: 1.5px solid #000; cursor: pointer; position: relative; flex-shrink: 0; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f1f1; }
+        .item-info { display: flex; align-items: center; gap: 12px; flex: 1; }
+        
+        .checkbox-custom { appearance: none; width: 22px; height: 22px; border: 2px solid #000; border-radius: 4px; cursor: pointer; position: relative; flex-shrink: 0; transition: 0.2s; }
         .checkbox-custom:checked { background: #000; }
-        .checkbox-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 10px; }
+        .checkbox-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 14px; font-weight: bold; }
         
-        .item-details b { display: block; font-size: 0.85rem; }
-        .item-details span { color: #888; font-size: 0.75rem; }
-        .qty-input { width: 40px; border: 1px solid #ddd; text-align: center; font-size: 0.8rem; padding: 2px; }
+        .item-details b { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+        .item-details span { color: #666; font-size: 0.8rem; font-weight: 600; }
+        
+        .qty-input { width: 45px; height: 35px; border: 1px solid #ccc; text-align: center; font-size: 0.9rem; font-weight: 600; border-radius: 5px; background: #fff; }
 
-        /* FORMULAIRE MASQUÉ AU DÉBUT */
-        #order-container { display: none; margin-top: 30px; }
+        /* ZONE DE COMMANDE */
+        #order-container { display: none; margin-top: 30px; border-top: 5px solid #000; }
         .form-section { background: var(--gris); padding: 20px; }
-        .form-section input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; font-family: inherit; }
+        .form-section input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem; border-radius: 8px; }
 
-        .order-bar { position: fixed; bottom: 0; width: 100%; background: #000; padding: 15px; z-index: 2000; box-shadow: 0 -5px 15px rgba(0,0,0,0.3); }
-        .total-box { color: #fff; display: flex; justify-content: space-between; font-weight: 900; margin-bottom: 10px; font-size: 1rem; }
-        .btn-wa { display: block; background: #fff; color: #000; text-align: center; padding: 12px; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
+        .order-bar { position: fixed; bottom: 0; width: 100%; background: #000; padding: 20px 15px; z-index: 2000; box-shadow: 0 -5px 20px rgba(0,0,0,0.4); border-radius: 20px 20px 0 0; }
+        .total-box { color: #fff; display: flex; justify-content: space-between; font-weight: 900; margin-bottom: 15px; font-size: 1.1rem; padding: 0 5px; }
+        .btn-wa { display: block; background: #25D366; color: #fff; text-align: center; padding: 15px; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.9rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
         
-        footer { padding: 40px 15px 120px; font-size: 0.6rem; color: #bbb; text-align: center; line-height: 1.5; }
+        footer { padding: 40px 15px 160px; font-size: 0.7rem; color: #999; text-align: center; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-<header><div class="logo">SHAWARMA EXPRESS</div></header>
+<header>
+    <div class="brand">
+        <img src="favicon.jpeg" alt="Logo">
+        <div class="logo-text">SHAWARMA EXPRESS</div>
+    </div>
+</header>
 
 <div class="carousel-viewport">
     <div class="carousel-track">
@@ -76,157 +87,53 @@
     </div>
 </div>
 
-<div class="delivery-info">📍 <b>MAMA YEMO / LUBUMBASHI</b> | 08h - 18h</div>
+<div class="delivery-info">📍 MAMA YEMO / LUBUMBASHI | 08h - 18h</div>
+<div class="delivery-alert">⚠️ Les frais de livraison dépendent de votre zone</div>
 
 <div class="menu-section">
     <div class="cat-title">SHAWARMA</div>
-    <div class="menu-item" data-price="13000" data-name="Shawarma Poulet">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Poulet</b><span>13.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="13000" data-name="Shawarma Viande">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Viande</b><span>13.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="18000" data-name="Shawarma Spécial">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Spécial</b><span>18.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="13000" data-name="Shawarma Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Poulet</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="13000" data-name="Shawarma Viande"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Viande</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="18000" data-name="Shawarma Spécial"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Spécial</b><span>18.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">TACOS</div>
-    <div class="menu-item" data-price="10000" data-name="Tacos Simple">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Simple</b><span>10.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="13000" data-name="Tacos Moyen">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Moyen</b><span>13.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="16000" data-name="Tacos X Large">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos X Large</b><span>16.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="30000" data-name="Tacos XX Large">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos XX Large</b><span>30.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="10000" data-name="Tacos Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Simple</b><span>10.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="13000" data-name="Tacos Moyen"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Moyen</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="16000" data-name="Tacos X Large"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos X Large</b><span>16.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="30000" data-name="Tacos XX Large"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos XX Large</b><span>30.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">BURGER</div>
-    <div class="menu-item" data-price="10000" data-name="Burger Viande Hachée">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Viande Hachée</b><span>10.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="7000" data-name="Burger Simple">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Simple</b><span>7.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="10000" data-name="Burger Viande Hachée"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Viande Hachée</b><span>10.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="7000" data-name="Burger Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Simple</b><span>7.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">SANDWICH</div>
-    <div class="menu-item" data-price="2500" data-name="Sandwich Salade">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Salade</b><span>2.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="3000" data-name="Sandwich Saucisse">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Saucisse</b><span>3.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="6000" data-name="Sandwich Poulet">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Poulet</b><span>6.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="2500" data-name="Sandwich Salade"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Salade</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="3000" data-name="Sandwich Saucisse"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Saucisse</b><span>3.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="6000" data-name="Sandwich Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Poulet</b><span>6.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">POULET & FRITES</div>
-    <div class="menu-item" data-price="25000" data-name="Poulet Mayo">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Poulet Mayo</b><span>25.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="9000" data-name="Frites Poulet">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Poulet</b><span>9.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="8000" data-name="Frites Saucisse">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Saucisse</b><span>8.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="25000" data-name="Poulet Mayo"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Poulet Mayo</b><span>25.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="9000" data-name="Frites Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Poulet</b><span>9.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="8000" data-name="Frites Saucisse"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Saucisse</b><span>8.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">ICE CREAM</div>
-    <div class="menu-item" data-price="1500" data-name="Crème Simple">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Simple</b><span>1.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2500" data-name="Crème Moyenne">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Moyenne</b><span>2.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="4500" data-name="Spécial Crème">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Spécial Crème</b><span>4.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="1500" data-name="Crème Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Simple</b><span>1.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2500" data-name="Crème Moyenne"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Moyenne</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="4500" data-name="Spécial Crème"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Spécial Crème</b><span>4.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 
     <div class="cat-title">BOISSONS</div>
-    <div class="menu-item" data-price="8000" data-name="Jus Cères">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Jus Cères</b><span>8.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2500" data-name="Sprite Cannette">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sprite Cannette</b><span>2.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2000" data-name="Coca G.F">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca G.F</b><span>2.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1500" data-name="Coca P.F">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca P.F</b><span>1.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2000" data-name="Fanta">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Fanta</b><span>2.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1000" data-name="Eau">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Eau</b><span>1.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2000" data-name="Kungfu">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Kungfu</b><span>2.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="2000" data-name="Appy">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Appy</b><span>2.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="20000" data-name="Super Shakes">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Super Shakes</b><span>20.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1500" data-name="Jus Jusy">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Jus Jusy</b><span>1.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1500" data-name="Yogo">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Yogo</b><span>1.500 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1000" data-name="Jus Yess">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Jus Yess</b><span>1.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1000" data-name="Bora">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Bora</b><span>1.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
-    <div class="menu-item" data-price="1000" data-name="Bonito">
-        <div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Bonito</b><span>1.000 FC</span></div></div>
-        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-    </div>
+    <div class="menu-item" data-price="8000" data-name="Jus Cères"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Jus Cères</b><span>8.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2500" data-name="Sprite Cannette"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sprite</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2000" data-name="Coca G.F"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca G.F</b><span>2.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="1500" data-name="Coca P.F"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca P.F</b><span>1.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="1000" data-name="Eau"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Eau</b><span>1.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 </div>
 
 <div id="order-container">
     <div class="form-section">
         <h3 class="cat-title" style="border:0; margin-top:0;">Vos Coordonnées</h3>
         <input type="text" id="nom" placeholder="Votre Nom">
-        <input type="text" id="adresse" placeholder="Lieu de livraison (Ex: Bel-Air, Golf)">
+        <input type="text" id="adresse" placeholder="Quartier et Référence">
         <input type="tel" id="tel" placeholder="N° de Téléphone">
     </div>
 
@@ -265,8 +172,10 @@
         const n = document.getElementById('nom').value.trim();
         const a = document.getElementById('adresse').value.trim();
         const p = document.getElementById('tel').value.trim();
-        if(!n || !a || !p) return alert("Veuillez remplir vos infos !");
-        const msg = `*COMMANDE SHAWARMA EXPRESS*%0A---------------------------%0A👤 *Client :* ${n}%0A📍 *Lieu :* ${a}%0A📞 *Tel :* ${p}%0A---------------------------%0A🍴 *Articles :*%0A- ${sel.join('%0A- ')}%0A---------------------------%0A💰 *TOTAL : ${t.toLocaleString()} FC*`;
+        if(!n || !a || !p) return alert("Veuillez remplir vos infos de livraison !");
+        
+        const msg = `*NOUVELLE COMMANDE - SHAWARMA EXPRESS*%0A---------------------------%0A👤 *Client :* ${n}%0A📍 *Lieu :* ${a}%0A📞 *Tel :* ${p}%0A---------------------------%0A🍴 *Détails :*%0A- ${sel.join('%0A- ')}%0A---------------------------%0A💰 *TOTAL : ${t.toLocaleString()} FC*%0A---------------------------%0A_Commande passée via le menu digital._`;
+        
         window.open(`https://wa.me/243853319140?text=${msg}`);
     }
 </script>
