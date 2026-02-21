@@ -16,22 +16,22 @@
         .brand img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--or); object-fit: cover; }
         .logo-text { font-weight: 900; color: var(--blanc); font-size: 0.8rem; letter-spacing: 2px; }
 
-        /* CAROUSEL STYLE KONGO NA BISO (Infini) */
+        /* CAROUSEL INFINI */
         .carousel-container { width: 100%; overflow: hidden; background: #fff; padding: 20px 0; border-bottom: 1px solid #eee; }
-        .carousel-track { display: flex; gap: 20px; animation: scroll-infinite 20s linear infinite; width: max-content; }
+        .carousel-track { display: flex; gap: 20px; animation: scroll-infinite 25s linear infinite; width: max-content; }
         
         .slide-item { width: 100px; text-align: center; flex-shrink: 0; }
-        .slide-item img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--noir); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .slide-item img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--noir); }
         .slide-item p { font-size: 0.7rem; font-weight: 900; margin-top: 8px; text-transform: uppercase; color: #333; }
 
         @keyframes scroll-infinite {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* On défile la moitié car on a doublé les items */
+            100% { transform: translateX(-50%); }
         }
 
         .delivery-info { background: var(--noir); color: white; padding: 10px; margin: 15px; font-size: 0.7rem; border-radius: 50px; text-align: center; font-weight: 600; }
         .menu-section { padding: 0 15px; }
-        .cat-title { color: #000; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin: 25px 0 10px; border-left: 5px solid var(--rouge); padding-left: 10px; width: 100%; }
+        .section-title { color: #000; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; margin: 20px 0 10px; border-bottom: 2px solid #000; display: inline-block; }
 
         .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f8f8f8; }
         .item-info { display: flex; align-items: center; gap: 12px; flex: 1; }
@@ -90,8 +90,11 @@
 
 <div class="delivery-info">LIVRAISON PARTOUT À LUBUMBASHI 🛵</div>
 
-<div class="menu-section" id="dynamic-menu">
-    <p style="text-align:center; padding:50px;">Préparation de votre menu...</p>
+<div class="menu-section">
+    <div class="section-title">Notre Carte</div>
+    <div id="dynamic-menu">
+        <p style="text-align:center; padding:50px;">Chargement du menu...</p>
+    </div>
 </div>
 
 <div id="order-container">
@@ -111,7 +114,7 @@
 <footer>
     📍 MAMA YEMO COIN KAMBOVE, LUBUMBASHI<br>
     Ouvert de 08h00 à 18h00<br>
-    © 2026 Shawarma Express | Digitalisé par vous
+    © 2026 Shawarma Express
 </footer>
 
 <script>
@@ -121,41 +124,38 @@
         try {
             const response = await fetch(sheetUrl);
             const data = await response.text();
+            // On divise par ligne, et on ignore la toute première ligne (titres)
             const rows = data.split("\n").slice(1);
             let html = "";
-            let currentCat = "";
 
             rows.forEach(row => {
                 const cols = row.split(",");
-                if (cols.length >= 4) {
-                    const cat = cols[0].trim();
-                    const name = cols[1].trim();
-                    const price = cols[2].trim().replace(/[^0-9]/g, ''); // On garde que les chiffres
-                    const photo = cols[3].trim();
+                // ON LIT LES 3 COLONNES : NOM (0), PRIX (1), PHOTO (2)
+                if (cols.length >= 3) {
+                    const name = cols[0].trim();
+                    const price = cols[1].trim().replace(/[^0-9]/g, ''); 
+                    const photo = cols[2].trim();
 
-                    if (cat !== currentCat && cat !== "") {
-                        currentCat = cat;
-                        html += `<div class="cat-title">${currentCat}</div>`;
-                    }
-
-                    html += `
-                        <div class="menu-item" data-price="${price}" data-name="${name}">
-                            <div class="item-info">
-                                <input type="checkbox" class="checkbox-custom" onchange="upd()">
-                                <img src="${photo}" class="item-img" onerror="this.src='favicon.jpeg'">
-                                <div class="item-details">
-                                    <b>${name}</b>
-                                    <span>${Number(price).toLocaleString()} FC</span>
+                    if(name !== "") {
+                        html += `
+                            <div class="menu-item" data-price="${price}" data-name="${name}">
+                                <div class="item-info">
+                                    <input type="checkbox" class="checkbox-custom" onchange="upd()">
+                                    <img src="${photo}" class="item-img" onerror="this.src='favicon.jpeg'">
+                                    <div class="item-details">
+                                        <b>${name}</b>
+                                        <span>${Number(price).toLocaleString()} FC</span>
+                                    </div>
                                 </div>
+                                <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
                             </div>
-                            <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-                        </div>
-                    `;
+                        `;
+                    }
                 }
             });
             document.getElementById('dynamic-menu').innerHTML = html;
         } catch (e) {
-            document.getElementById('dynamic-menu').innerHTML = "Erreur. Vérifiez votre connexion.";
+            document.getElementById('dynamic-menu').innerHTML = "Erreur de chargement du menu.";
         }
     }
 
@@ -182,7 +182,7 @@
         const p = document.getElementById('tel').value.trim();
         if(!n || !a || !p) return alert("Veuillez remplir vos infos de livraison !");
         
-        const msg = `*NOUVELLE COMMANDE - SHAWARMA EXPRESS*%0A---------------------------%0A👤 *Client :* ${n}%0A📍 *Lieu :* ${a}%0A📞 *Tel :* ${p}%0A---------------------------%0A🍴 *Détails :*%0A- ${sel.join('%0A- ')}%0A---------------------------%0A💰 *TOTAL : ${t.toLocaleString()} FC*%0A---------------------------%0A_Menu digital_`;
+        const msg = `*NOUVELLE COMMANDE - SHAWARMA EXPRESS*%0A---------------------------%0A👤 *Client :* ${n}%0A📍 *Lieu :* ${a}%0A📞 *Tel :* ${p}%0A---------------------------%0A🍴 *Détails :*%0A- ${sel.join('%0A- ')}%0A---------------------------%0A💰 *TOTAL : ${t.toLocaleString()} FC*%0A---------------------------%0A_Commande via menu digital_`;
         
         window.open(`https://wa.me/243853319140?text=${msg}`);
     }
