@@ -3,59 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shawarma Express - Menu Mobile</title>
+    <title>Shawarma Express - Menu Officiel</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --noir: #000000; --blanc: #ffffff; --gris: #f4f4f4; --rouge: #ff0000; --or: #ffd700; }
+        :root { --noir: #000000; --blanc: #ffffff; --gris: #f8f9fa; --rouge: #ff0000; --vert: #25D366; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--blanc); color: var(--noir); padding-bottom: 20px; overflow-x: hidden; }
 
-        header { background: var(--noir); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .brand { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .brand img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--or); object-fit: cover; }
-        .logo-text { font-weight: 900; color: var(--blanc); font-size: 0.8rem; letter-spacing: 2px; }
+        header { background: var(--noir); padding: 20px 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .brand { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .brand img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--blanc); object-fit: cover; background: #fff; }
+        .logo-text { font-weight: 900; color: var(--blanc); font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; }
 
-        /* CAROUSEL INFINI */
-        .carousel-container { width: 100%; overflow: hidden; background: #fff; padding: 20px 0; border-bottom: 1px solid #eee; }
-        .carousel-track { display: flex; gap: 20px; animation: scroll-infinite 25s linear infinite; width: max-content; }
-        
-        .slide-item { width: 100px; text-align: center; flex-shrink: 0; }
-        .slide-item img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--noir); }
-        .slide-item p { font-size: 0.7rem; font-weight: 900; margin-top: 8px; text-transform: uppercase; color: #333; }
+        /* CAROUSEL MODERNE */
+        .carousel-viewport { width: 100%; height: 200px; overflow: hidden; position: relative; background: #000; }
+        .carousel-track { display: flex; width: max-content; height: 100%; animation: scroll 30s linear infinite; }
+        .slide { width: 250px; height: 100%; position: relative; flex-shrink: 0; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .slide .label { position: absolute; bottom: 20px; left: 15px; color: white; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,1); border-left: 3px solid var(--rouge); padding-left: 10px; }
 
-        @keyframes scroll-infinite {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .delivery-info { background: var(--noir); color: white; padding: 10px; margin: 15px; font-size: 0.7rem; border-radius: 50px; text-align: center; font-weight: 600; }
+        .delivery-info { background: var(--noir); color: white; padding: 12px; margin: 15px; font-size: 0.75rem; border-radius: 10px; text-align: center; font-weight: 600; }
         .menu-section { padding: 0 15px; }
-        .section-title { color: #000; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; margin: 20px 0 10px; border-bottom: 2px solid #000; display: inline-block; }
+        .cat-title { color: #000; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin: 30px 0 10px; border-bottom: 3px solid var(--rouge); padding-bottom: 5px; display: block; }
 
-        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f8f8f8; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
         .item-info { display: flex; align-items: center; gap: 12px; flex: 1; }
-        
+        .item-thumb { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
+
         .checkbox-custom { appearance: none; width: 24px; height: 24px; border: 2px solid #000; border-radius: 6px; cursor: pointer; position: relative; flex-shrink: 0; }
         .checkbox-custom:checked { background: #000; }
-        .checkbox-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 16px; font-weight: bold; }
+        .checkbox-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 14px; font-weight: bold; }
         
-        .item-img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; background: #f9f9f9; }
-        .item-details b { display: block; font-size: 0.9rem; color: #222; }
+        .item-details b { display: block; font-size: 0.9rem; }
         .item-details span { color: var(--rouge); font-size: 0.85rem; font-weight: 900; }
         
-        .qty-input { width: 50px; height: 35px; border: 1px solid #ddd; text-align: center; font-size: 0.9rem; font-weight: 900; border-radius: 8px; }
+        .qty-input { width: 45px; height: 35px; border: 1px solid #ccc; text-align: center; font-size: 0.9rem; font-weight: 900; border-radius: 8px; }
 
-        /* ZONE COMMANDE */
-        #order-container { display: none; padding-bottom: 120px; }
-        .form-section { background: var(--gris); padding: 20px; margin: 15px; border-radius: 15px; }
-        .form-section input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; }
+        /* COMMANDE */
+        #order-container { display: none; margin-top: 20px; }
+        .form-section { background: var(--gris); padding: 20px; border-radius: 20px 20px 0 0; }
+        .form-section input { width: 100%; padding: 14px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
 
-        .order-bar { position: fixed; bottom: 0; width: 100%; background: #fff; padding: 15px; z-index: 2000; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); border-radius: 25px 25px 0 0; }
-        .total-box { display: flex; justify-content: space-between; font-weight: 900; margin-bottom: 12px; font-size: 1.2rem; }
-        .btn-wa { display: block; background: #25D366; color: #fff; text-align: center; padding: 15px; text-decoration: none; font-weight: 900; border-radius: 15px; }
-        
-        footer { padding: 40px 15px 150px; font-size: 0.7rem; color: #999; text-align: center; }
+        .order-bar { position: fixed; bottom: 0; width: 100%; background: var(--noir); padding: 15px 15px 25px; z-index: 2000; border-radius: 20px 20px 0 0; }
+        .total-box { color: #fff; display: flex; justify-content: space-between; font-weight: 900; margin-bottom: 15px; font-size: 1.2rem; }
+        .btn-wa { display: block; background: var(--vert); color: #fff; text-align: center; padding: 16px; text-decoration: none; font-weight: 900; border-radius: 12px; }
+
+        footer { padding: 40px 15px 180px; font-size: 0.75rem; color: #888; text-align: center; }
     </style>
 </head>
 <body>
@@ -67,96 +63,108 @@
     </div>
 </header>
 
-<div class="carousel-container">
+<div class="carousel-viewport">
     <div class="carousel-track">
-        <div class="slide-item"><img src="menu1.jpg"><p>Shawarma</p></div>
-        <div class="slide-item"><img src="menu2.jpg"><p>Tacos</p></div>
-        <div class="slide-item"><img src="menu3.jpg"><p>Burger</p></div>
-        <div class="slide-item"><img src="menu4.jpg"><p>Sandwich</p></div>
-        <div class="slide-item"><img src="menu5.jpg"><p>Poulet</p></div>
-        <div class="slide-item"><img src="menu6.jpg"><p>Frites</p></div>
-        <div class="slide-item"><img src="menu7.jpg"><p>Glaces</p></div>
-        <div class="slide-item"><img src="menu8.jpg"><p>Boissons</p></div>
-        <div class="slide-item"><img src="menu1.jpg"><p>Shawarma</p></div>
-        <div class="slide-item"><img src="menu2.jpg"><p>Tacos</p></div>
-        <div class="slide-item"><img src="menu3.jpg"><p>Burger</p></div>
-        <div class="slide-item"><img src="menu4.jpg"><p>Sandwich</p></div>
-        <div class="slide-item"><img src="menu5.jpg"><p>Poulet</p></div>
-        <div class="slide-item"><img src="menu6.jpg"><p>Frites</p></div>
-        <div class="slide-item"><img src="menu7.jpg"><p>Glaces</p></div>
-        <div class="slide-item"><img src="menu8.jpg"><p>Boissons</p></div>
+        <div class="slide"><img src="menu1.jpg"><div class="label">SHAWARMA</div></div>
+        <div class="slide"><img src="menu2.jpg"><div class="label">TACOS</div></div>
+        <div class="slide"><img src="menu3.jpg"><div class="label">BURGER</div></div>
+        <div class="slide"><img src="menu4.jpg"><div class="label">SANDWICH</div></div>
+        <div class="slide"><img src="menu5.jpg"><div class="label">POULET</div></div>
+        <div class="slide"><img src="menu6.jpg"><div class="label">FRITES</div></div>
+        <div class="slide"><img src="menu7.jpg"><div class="label">GLACES</div></div>
+        <div class="slide"><img src="menu8.jpg"><div class="label">BOISSONS</div></div>
+        <div class="slide"><img src="menu1.jpg"><div class="label">SHAWARMA</div></div>
+        <div class="slide"><img src="menu2.jpg"><div class="label">TACOS</div></div>
     </div>
 </div>
 
-<div class="delivery-info">LIVRAISON PARTOUT À LUBUMBASHI 🛵</div>
+<div class="delivery-info">📍 MAMA YEMO / LUBUMBASHI | 08h - 18h</div>
 
 <div class="menu-section">
-    <div class="section-title">Notre Carte</div>
-    <div id="dynamic-menu">
-        <p style="text-align:center; padding:50px;">Chargement du menu...</p>
-    </div>
+    <div id="google-sheet-section"></div>
+
+    <div class="cat-title">🌯 SHAWARMA</div>
+    <div class="menu-item" data-price="13000" data-name="Shawarma Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Poulet</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="13000" data-name="Shawarma Viande"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Viande</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="18000" data-name="Shawarma Spécial"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Shawarma Spécial</b><span>18.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🌮 TACOS</div>
+    <div class="menu-item" data-price="10000" data-name="Tacos Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Simple</b><span>10.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="13000" data-name="Tacos Moyen"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos Moyen</b><span>13.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="16000" data-name="Tacos X-Large"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos X-Large</b><span>16.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="30000" data-name="Tacos XX-Large"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Tacos XX-Large</b><span>30.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🍔 BURGER</div>
+    <div class="menu-item" data-price="10000" data-name="Burger Viande Hachée"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Viande Hachée</b><span>10.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="7000" data-name="Burger Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Burger Simple</b><span>7.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🥪 SANDWICH</div>
+    <div class="menu-item" data-price="6000" data-name="Sandwich Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Poulet</b><span>6.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="3000" data-name="Sandwich Saucisse"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Saucisse</b><span>3.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2500" data-name="Sandwich Salade"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Sandwich Salade</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🍗 POULET & FRITES</div>
+    <div class="menu-item" data-price="25000" data-name="Poulet Mayo Entier"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Poulet Mayo</b><span>25.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="9000" data-name="Frites Poulet"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Poulet</b><span>9.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="8000" data-name="Frites Saucisse"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Frites Saucisse</b><span>8.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🍦 ICE CREAM</div>
+    <div class="menu-item" data-price="4500" data-name="Spécial Crème"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Spécial Crème</b><span>4.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2500" data-name="Crème Moyenne"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Moyenne</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="1500" data-name="Crème Simple"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Crème Simple</b><span>1.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+
+    <div class="cat-title">🥤 BOISSONS</div>
+    <div class="menu-item" data-price="8000" data-name="Jus Cérès"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Jus Cérès</b><span>8.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2500" data-name="Sprite/Fanta Cannette"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Cannette</b><span>2.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="2000" data-name="Coca G.F"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca G.F</b><span>2.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="1500" data-name="Coca P.F"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Coca P.F</b><span>1.500 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
+    <div class="menu-item" data-price="1000" data-name="Eau 0.5L"><div class="item-info"><input type="checkbox" class="checkbox-custom" onchange="upd()"><div class="item-details"><b>Eau Pure</b><span>1.000 FC</span></div></div><input type="number" value="1" min="1" class="qty-input" onchange="upd()"></div>
 </div>
 
 <div id="order-container">
     <div class="form-section">
-        <b style="display:block; margin-bottom:10px;">INFOS DE LIVRAISON</b>
+        <b>📍 INFOS LIVRAISON</b>
         <input type="text" id="nom" placeholder="Votre Nom">
         <input type="text" id="adresse" placeholder="Quartier et Référence">
-        <input type="tel" id="tel" placeholder="N° de Téléphone">
+        <input type="tel" id="tel" placeholder="Téléphone">
     </div>
-
     <div class="order-bar">
-        <div class="total-box"><span>TOTAL</span> <span id="tot" style="color:var(--rouge)">0</span> <span style="color:var(--rouge)">FC</span></div>
-        <a href="javascript:void(0)" class="btn-wa" onclick="send()">COMMANDER SUR WHATSAPP</a>
+        <div class="total-box"><span>TOTAL :</span> <span id="tot">0</span> FC</div>
+        <a href="javascript:void(0)" class="btn-wa" onclick="send()">PASSER COMMANDE</a>
     </div>
 </div>
 
 <footer>
     📍 MAMA YEMO COIN KAMBOVE, LUBUMBASHI<br>
-    Ouvert de 08h00 à 18h00<br>
-    © 2026 Shawarma Express
+    Shawarma Express © 2026
 </footer>
 
 <script>
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTkJSa9W3yY0DWRPyJpD3LDYnv7r-EuryFJD0yN2qqZp2lb9bqDAhXoL3MjPX9Io4ujP1V3scMWs-90/pub?output=csv";
 
-    async function loadMenu() {
+    async function loadPromos() {
         try {
-            const response = await fetch(sheetUrl);
-            const data = await response.text();
-            // On divise par ligne, et on ignore la toute première ligne (titres)
-            const rows = data.split("\n").slice(1);
-            let html = "";
-
-            rows.forEach(row => {
-                const cols = row.split(",");
-                // ON LIT LES 3 COLONNES : NOM (0), PRIX (1), PHOTO (2)
-                if (cols.length >= 3) {
-                    const name = cols[0].trim();
-                    const price = cols[1].trim().replace(/[^0-9]/g, ''); 
-                    const photo = cols[2].trim();
-
-                    if(name !== "") {
-                        html += `
-                            <div class="menu-item" data-price="${price}" data-name="${name}">
-                                <div class="item-info">
-                                    <input type="checkbox" class="checkbox-custom" onchange="upd()">
-                                    <img src="${photo}" class="item-img" onerror="this.src='favicon.jpeg'">
-                                    <div class="item-details">
-                                        <b>${name}</b>
-                                        <span>${Number(price).toLocaleString()} FC</span>
-                                    </div>
-                                </div>
-                                <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
-                            </div>
-                        `;
-                    }
+            const res = await fetch(sheetUrl);
+            const csv = await res.text();
+            const lines = csv.split("\n").slice(1);
+            let html = '<div class="cat-title">✨ NOUVEAUTÉS DU MOMENT</div>';
+            let found = false;
+            lines.forEach(l => {
+                const c = l.split(",");
+                if(c.length >= 3 && c[0].trim() !== "") {
+                    found = true;
+                    html += `<div class="menu-item" data-price="${c[1]}" data-name="${c[0]}">
+                        <div class="item-info">
+                            <input type="checkbox" class="checkbox-custom" onchange="upd()">
+                            <img src="${c[2]}" class="item-thumb" onerror="this.src='favicon.jpeg'">
+                            <div class="item-details"><b>${c[0]}</b><span>${Number(c[1]).toLocaleString()} FC</span></div>
+                        </div>
+                        <input type="number" value="1" min="1" class="qty-input" onchange="upd()">
+                    </div>`;
                 }
             });
-            document.getElementById('dynamic-menu').innerHTML = html;
-        } catch (e) {
-            document.getElementById('dynamic-menu').innerHTML = "Erreur de chargement du menu.";
-        }
+            if(found) document.getElementById('google-sheet-section').innerHTML = html;
+        } catch(e) {}
     }
 
     let sel = []; let t = 0;
@@ -171,7 +179,6 @@
                 sel.push(`*${q.value}x* ${m.dataset.name} (${p.toLocaleString()} FC)`);
             }
         });
-        
         document.getElementById('order-container').style.display = (t > 0) ? 'block' : 'none';
         document.getElementById('tot').innerText = t.toLocaleString();
     }
@@ -180,14 +187,11 @@
         const n = document.getElementById('nom').value.trim();
         const a = document.getElementById('adresse').value.trim();
         const p = document.getElementById('tel').value.trim();
-        if(!n || !a || !p) return alert("Veuillez remplir vos infos de livraison !");
-        
-        const msg = `*NOUVELLE COMMANDE - SHAWARMA EXPRESS*%0A---------------------------%0A👤 *Client :* ${n}%0A📍 *Lieu :* ${a}%0A📞 *Tel :* ${p}%0A---------------------------%0A🍴 *Détails :*%0A- ${sel.join('%0A- ')}%0A---------------------------%0A💰 *TOTAL : ${t.toLocaleString()} FC*%0A---------------------------%0A_Commande via menu digital_`;
-        
+        if(!n || !a || !p) return alert("Remplissez vos infos !");
+        const msg = `*COMMANDE SHAWARMA EXPRESS*%0A👤 *Client:* ${n}%0A📍 *Lieu:* ${a}%0A📞 *Tel:* ${p}%0A🍴 *Détails:*%0A- ${sel.join('%0A- ')}%0A💰 *TOTAL: ${t.toLocaleString()} FC*`;
         window.open(`https://wa.me/243853319140?text=${msg}`);
     }
-
-    loadMenu();
+    loadPromos();
 </script>
 </body>
 </html>
